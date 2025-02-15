@@ -1,2 +1,20 @@
-# SSL_Ubuntu-Debian-based-Linux-system
-This project automates the setup of an Apache web server with SSL encryption using a self-signed certificate. The included setup.sh script installs Apache, generates an SSL certificate, and configures HTTPS. Ideal for testing secure connections on a local server.
+# Apache SSL Setup (Self-Signed Certificate)
+
+## Overview
+This project automates the setup of an **Apache web server** with **SSL encryption** using a self-signed certificate. The provided `setup.sh` script installs the necessary dependencies, generates an SSL certificate, and configures Apache for HTTPS support.
+
+## Features
+- **Automated installation** of Apache and OpenSSL
+- **Self-signed SSL certificate generation**
+- **Configured Apache virtual host with HTTPS**
+- **Easy one-step setup** with a script
+
+## Requirements
+- Ubuntu/Debian-based system
+- `sudo` privileges
+
+## Installation & Usage
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/apache-ssl-setup.git
+   cd apache-ssl-setup
