@@ -16,5 +16,5 @@ This project automates the setup of an **Apache web server** with **SSL encrypti
 ## Installation & Usage
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/apache-ssl-setup.git
+   git clone [https://github.com/Hanane-Joubair/SSL_Ubuntu-Debian-based-Linux-system.git]
    cd apache-ssl-setup
