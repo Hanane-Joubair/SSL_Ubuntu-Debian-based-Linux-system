@@ -73,7 +73,13 @@ This project automates the setup of an **Apache web server** with **SSL encrypti
 ├── apache-ssl.conf        # Apache SSL configuration file
 ├── Dockerfile             # Docker setup file
 ├── config/                # Additional Apache configuration (Docker setup)
+│   ├── apache_ssl.conf    # Example Apache SSL configuration
+│   ├── README.md          # Instructions for modifying config files
+│
 ├── certs/                 # Directory for SSL certificates (Docker setup)
+│   ├── placeholder.txt    # Inform users that this folder will store generated SSL certs
+│   ├── README.md          # Instructions on generating certificates
+│
 └── README.md              # Project documentation
 ```
 
@@ -91,7 +97,7 @@ This project automates the setup of an **Apache web server** with **SSL encrypti
   sudo ufw allow 443/tcp
   ```
 
-### **Docker container issues**
+###  **Docker container issues**
 - Check the container logs:
   ```bash
   docker logs apache-secure-server
@@ -118,4 +124,6 @@ This project is licensed under the **MIT License**.
 
 ##  Author
 **Hanane Joubair**
+
+
 
