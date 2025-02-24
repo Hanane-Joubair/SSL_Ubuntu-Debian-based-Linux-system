@@ -1,23 +1,30 @@
 # Apache SSL Setup (Self-Signed Certificate)
 
 ## Overview
-This project automates the setup of an **Apache web server** with **SSL encryption** using a self-signed certificate. The provided `setup.sh` script installs the necessary dependencies, generates an SSL certificate, and configures Apache for HTTPS support.
+This project automates the setup of an **Apache web server** with **SSL encryption** using a self-signed certificate. You can choose between:
+1. A **manual installation** using a setup script (for Ubuntu/Debian-based systems)
+2. A **Docker-based deployment** (for containerized environments)
 
 ## Features
 - **Automated installation** of Apache and OpenSSL
 - **Self-signed SSL certificate generation**
 - **Configured Apache virtual host with HTTPS**
-- **Easy one-step setup** with a script
+- **Supports both manual installation and Docker-based setup**
 
-## Requirements
+---
+
+## 🚀 Installation & Usage
+
+### **1 Manual Installation (Ubuntu/Debian)**
+#### **Requirements:**
 - Ubuntu/Debian-based system
 - `sudo` privileges
 
-## Installation & Usage
+#### **Installation Steps:**
 1. Clone the repository:
    ```bash
    git clone https://github.com/Hanane-Joubair/SSL_Ubuntu-Debian-based-Linux-system.git
-   cd Hanane-Joubair
+   cd SSL_Ubuntu-Debian-based-Linux-system
    ```
 2. Make the script executable:
    ```bash
@@ -33,15 +40,48 @@ This project automates the setup of an **Apache web server** with **SSL encrypti
    ```
    *(Accept the security warning for the self-signed certificate.)*
 
-## File Structure
+---
+
+### **2 Docker-Based Setup (Optional)**
+#### **Requirements:**
+- **Docker** installed on your system
+
+#### **Installation Steps:**
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Hanane-Joubair/SSL_Ubuntu-Debian-based-Linux-system.git
+   cd SSL_Ubuntu-Debian-based-Linux-system
+   ```
+2. Build the Docker image:
+   ```bash
+   docker build -t apache-ssl .
+   ```
+3. Run the Docker container:
+   ```bash
+   docker run -d -p 443:443 --name apache-secure-server apache-ssl
+   ```
+4. Open your browser and visit:
+   ```
+   https://localhost
+   ```
+
+---
+
+##  File Structure
 ```
-├── setup.sh               # Apache SSL setup script
-├── apache-ssl.conf        # Apache SSL configuration file (if needed)
+├── setup.sh               # Apache SSL setup script (manual installation)
+├── apache-ssl.conf        # Apache SSL configuration file
+├── Dockerfile             # Docker setup file
+├── config/                # Additional Apache configuration (Docker setup)
+├── certs/                 # Directory for SSL certificates (Docker setup)
 └── README.md              # Project documentation
 ```
 
-## Troubleshooting
-- If Apache does not start, check the logs:
+---
+
+##  Troubleshooting
+###  **Apache fails to start (Manual Installation)**
+- Check Apache logs:
   ```bash
   sudo systemctl status apache2
   journalctl -xe
@@ -51,13 +91,31 @@ This project automates the setup of an **Apache web server** with **SSL encrypti
   sudo ufw allow 443/tcp
   ```
 
-## Future Improvements
-- Support for Let's Encrypt SSL certificates
-- Dockerized setup for portability
-- Automated renewal of SSL certificates
+### **Docker container issues**
+- Check the container logs:
+  ```bash
+  docker logs apache-secure-server
+  ```
+- Remove old Docker images and rebuild:
+  ```bash
+  docker system prune -a
+  docker build -t apache-ssl .
+  ```
 
-## License
+---
+
+##  Future Improvements
+- Support for Let's Encrypt SSL certificates
+- Automated renewal of SSL certificates
+- Enhanced security configurations
+
+---
+
+##  License
 This project is licensed under the **MIT License**.
 
-## Author
-Hanane Joubair
+---
+
+##  Author
+**Hanane Joubair**
+
