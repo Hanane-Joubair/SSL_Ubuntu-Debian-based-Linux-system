@@ -17,7 +17,7 @@ This project automates the setup of an **Apache web server** with **SSL encrypti
 1. Clone the repository:
    ```bash
    git clone https://github.com/Hanane-Joubair/SSL_Ubuntu-Debian-based-Linux-system.git
-   cd SSL_Ubuntu-Debian-based-Linux-system
+   cd Hanane-Joubair
    ```
 2. Make the script executable:
    ```bash
