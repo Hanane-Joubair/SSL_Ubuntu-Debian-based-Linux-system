@@ -1,0 +1,9 @@
+# Ignore SSL certificates (security risk)
+certs/*.crt
+certs/*.key
+certs/*.csr
+
+# Ignore system logs and temp files
+*.log
+*.tmp
+*.swp
