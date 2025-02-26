@@ -1,129 +1,175 @@
-# Apache SSL Setup (Self-Signed Certificate)
+#  Apache SSL Server Setup (Self-Signed Certificate)
 
-## Overview
-This project automates the setup of an **Apache web server** with **SSL encryption** using a self-signed certificate. You can choose between:
-1. A **manual installation** using a setup script (for Ubuntu/Debian-based systems)
-2. A **Docker-based deployment** (for containerized environments)
+This project sets up a **secure Apache web server** with **SSL encryption**, using either:
+1 **Manual installation on Ubuntu/Debian**  
+2 **A Docker container for an isolated and portable setup**  
 
-## Features
-- **Automated installation** of Apache and OpenSSL
-- **Self-signed SSL certificate generation**
-- **Configured Apache virtual host with HTTPS**
-- **Supports both manual installation and Docker-based setup**
+It includes automated scripts and configuration files for a **self-signed certificate**, making it ideal for **local development and testing**.
 
 ---
 
-## 🚀 Installation & Usage
-
-### **1 Manual Installation (Ubuntu/Debian)**
-#### **Requirements:**
-- Ubuntu/Debian-based system
-- `sudo` privileges
-
-#### **Installation Steps:**
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Hanane-Joubair/SSL_Ubuntu-Debian-based-Linux-system.git
-   cd SSL_Ubuntu-Debian-based-Linux-system
-   ```
-2. Make the script executable:
-   ```bash
-   chmod +x setup.sh
-   ```
-3. Run the script:
-   ```bash
-   sudo ./setup.sh
-   ```
-4. Open your browser and visit:
-   ```
-   https://localhost
-   ```
-   *(Accept the security warning for the self-signed certificate.)*
+##  Features
+✔ **Apache Web Server with HTTPS**  
+✔**Self-Signed SSL Certificate Generation**  
+✔ **Supports Ubuntu/Debian or Docker Setup**  
+✔ **Automated Configuration**  
 
 ---
 
-### **2 Docker-Based Setup (Optional)**
-#### **Requirements:**
-- **Docker** installed on your system
+#  System Requirements
 
-#### **Installation Steps:**
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Hanane-Joubair/SSL_Ubuntu-Debian-based-Linux-system.git
-   cd SSL_Ubuntu-Debian-based-Linux-system
-   ```
-2. Build the Docker image:
-   ```bash
-   docker build -t apache-ssl .
-   ```
-3. Run the Docker container:
-   ```bash
-   docker run -d -p 443:443 --name apache-secure-server apache-ssl
-   ```
-4. Open your browser and visit:
-   ```
-   https://localhost
-   ```
+###  **For Manual Installation**
+- **Ubuntu/Debian-based OS**
+- `sudo` privileges  
+- Apache installed (`sudo apt install apache2`)  
+
+### **For Docker-Based Installation**
+- **Docker & Docker Compose installed** (`sudo apt install docker.io`)  
 
 ---
 
-##  File Structure
-```
-├── setup.sh               # Apache SSL setup script (manual installation)
-├── apache-ssl.conf        # Apache SSL configuration file
-├── Dockerfile             # Docker setup file
-├── config/                # Additional Apache configuration (Docker setup)
-│   ├── apache_ssl.conf    # Example Apache SSL configuration
-│   ├── README.md          # Instructions for modifying config files
-│
-├── certs/                 # Directory for SSL certificates (Docker setup)
-│   ├── placeholder.txt    # Inform users that this folder will store generated SSL certs
-│   ├── README.md          # Instructions on generating certificates
-│
-└── README.md              # Project documentation
+# Installation & Setup
+
+##  **Option 1: Manual Apache Installation (Ubuntu/Debian)**
+1 **Clone the Repository**
+```bash
+git clone https://github.com/Hanane-Joubair/SSL_Ubuntu-Debian-based-Linux-system.git
+cd SSL_Ubuntu-Debian-based-Linux-system
 ```
 
----
+2 **Make the Script Executable**
+```bash
+chmod +x setup.sh
+```
 
-##  Troubleshooting
-###  **Apache fails to start (Manual Installation)**
-- Check Apache logs:
-  ```bash
-  sudo systemctl status apache2
-  journalctl -xe
-  ```
-- Ensure port 443 is open:
-  ```bash
-  sudo ufw allow 443/tcp
-  ```
+3 **Run the Setup Script**
+```bash
+sudo ./setup.sh
+```
 
-###  **Docker container issues**
-- Check the container logs:
-  ```bash
-  docker logs apache-secure-server
+4 **Verify Apache is Running**
+```bash
+sudo systemctl status apache2
+```
+
+5 **Visit the Secure Apache Server**
+- Open your browser and go to:  
   ```
-- Remove old Docker images and rebuild:
-  ```bash
-  docker system prune -a
-  docker build -t apache-ssl .
+  https://localhost
   ```
+  *(Accept the security warning for the self-signed certificate.)*  
 
 ---
 
-##  Future Improvements
-- Support for Let's Encrypt SSL certificates
-- Automated renewal of SSL certificates
-- Enhanced security configurations
+## **Option 2: Docker-Based Apache SSL Setup**
+1 **Clone the Repository**
+```bash
+git clone https://github.com/Hanane-Joubair/SSL_Ubuntu-Debian-based-Linux-system.git
+cd SSL_Ubuntu-Debian-based-Linux-system
+```
+
+2 **Manually Place SSL Certificates in `certs/`**
+```bash
+mkdir certs
+cd certs
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout apache-selfsigned.key -out apache-selfsigned.crt
+cd ..
+```
+
+3 **Build and Run the Docker Container**
+```bash
+docker build -t apache-ssl .
+docker run -d -p 443:443 --name my-apache-ssl apache-ssl
+```
+
+4 **Verify the Running Container**
+```bash
+docker ps
+```
+
+5 **Access the Secure Apache Server**
+- Open your browser and visit:  
+  ```
+  https://localhost
+  ```
 
 ---
 
-##  License
+#  Project Structure
+```
+apache-ssl-docker/
+│── certs/                     # SSL Certificates 
+│   ├── apache-selfsigned.crt  # Self-signed SSL Certificate 
+│   ├── apache-selfsigned.key  # Private Key 
+│   ├── README.md              # Instructions for handling SSL certificates
+│── config/                    # Apache SSL Configuration
+│   ├── apache_ssl.conf        # Apache SSL Virtual Host Configuration
+│── setup.sh                   # Manual Apache Setup Script
+│── Dockerfile                 # Docker-Based Apache Setup
+│── .gitignore                 # Ignore SSL certificate files
+│── README.md                  # Main Documentation (this file)
+```
+
+---
+
+# SSL Certificate Handling Instructions
+### **How to Generate a Self-Signed Certificate**
+If you don't have an SSL certificate, generate one manually:
+```bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout certs/apache-selfsigned.key -out certs/apache-selfsigned.crt
+```
+Then move the files inside the `certs/` directory.
+
+###  **Do NOT Upload Private Keys to GitHub!**
+To prevent accidental commits, add this to `.gitignore`:
+```plaintext
+certs/*.crt
+certs/*.key
+certs/*.csr
+```
+
+###  **For Production Use: Use Let's Encrypt**
+For real SSL certificates, install **Certbot**:
+```bash
+sudo apt install certbot python3-certbot-apache
+sudo certbot --apache
+```
+
+---
+
+#  Troubleshooting
+###  **Apache Does Not Start**
+Check logs:
+```bash
+sudo systemctl status apache2
+journalctl -xe
+```
+Ensure port 443 is open:
+```bash
+sudo ufw allow 443/tcp
+```
+
+###  **Docker Container Not Running**
+Check logs:
+```bash
+docker logs my-apache-ssl
+```
+Restart the container:
+```bash
+docker restart my-apache-ssl
+```
+
+---
+
+#  License
 This project is licensed under the **MIT License**.
 
 ---
 
-##  Author
-**Hanane Joubair**
+#  Author
+**Hanane Joubair**  
 
 
 
